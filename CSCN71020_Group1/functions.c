@@ -135,7 +135,7 @@ bool is_valid_input(char* input) {
 }
 float get_valid_input(char* prompt) {
     char input[NUMLIMIT];
-    float value;
+    float value = 0;
     while (1) {
         printf("%s", prompt);
         fgets(input, sizeof(input), stdin);
@@ -156,232 +156,203 @@ float get_valid_input(char* prompt) {
 void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT]) {
     // THIS FUNCTION NEEDS TO BE FIXED
 
+    // ***
     printf("\nP1: (%f,%f)\n", P1[x], P1[y]);
     printf("\nP2: (%f,%f)\n", P2[x], P2[y]);
     printf("\nP3: (%f,%f)\n", P3[x], P3[y]);
     printf("\nP4: (%f,%f)\n", P4[x], P4[y]);
 
 
+    float line1x = (P2[x] - P1[x]) * (P2[x] - P1[x]);
+    float line1y = (P2[y] - P1[y]) * (P2[y] - P1[y]);
 
-    float line1 = P1[x] - P2[x];
-    if ((P2[x] - P1[x]) > line1) {
-        line1 = P2[x] - P1[x];
+    float line2x = (P3[x] - P1[x]) * (P3[x] - P1[x]);
+    float line2y = (P3[y] - P1[y]) * (P3[y] - P1[y]);
+
+    float line3x = (P4[x] - P1[x]) * (P4[x] - P1[x]);
+    float line3y = (P4[y] - P1[y]) * (P4[y] - P1[y]);
+
+    float line4x = (P3[x] - P2[x]) * (P3[x] - P2[x]);
+    float line4y = (P3[y] - P2[y]) * (P3[y] - P2[y]);
+
+    float line5x = (P4[x] - P2[x]) * (P4[x] - P2[x]);
+    float line5y = (P4[y] - P2[y]) * (P4[y] - P2[y]);
+
+    float line6x = (P4[x] - P3[x]) * (P4[x] - P3[x]);
+    float line6y = (P4[y] - P3[y]) * (P4[y] - P3[y]);
+
+
+    float line1 = sqrt(line1x + line1y);
+    float line2 = sqrt(line2x + line2y);
+    float line3 = sqrt(line3x + line3y);
+    float line4 = sqrt(line4x + line4y);
+    float line5 = sqrt(line5x + line5y);
+    float line6 = sqrt(line6x + line6y);
+
+    float RectangleLines[NUM_OF_SIDES] = { line1, line2, line3, line4, line5, line6 };
+
+
+    printf("%f %f %f %f %f %f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
+
+    float temp = 0;
+    for (int i = 0; i < NUM_OF_SIDES - 1; i++) {
+        int LowestElement = i;
+
+        for (int j = i + 1; j < NUM_OF_SIDES; j++) {
+            {
+                if (RectangleLines[j] > RectangleLines[LowestElement]) {
+                    LowestElement = j;
+                }
+            }
+        }
+
+        if (LowestElement != i) {
+
+            temp = RectangleLines[i];
+            RectangleLines[i] = RectangleLines[LowestElement];
+            RectangleLines[LowestElement] =temp;
+        }
     }
-    else if ((P2[y] - P1[y]) > line1) {
-        line1 = P2[y] - P1[y];
-    }
+    printf("%f %f %f %f %f %f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
 
+    // ***
 
-    printf("Line 1: %f\n\n", line1);
-
-
-    float line2 = P1[x] - P3[x];
-    if ((P3[x] - P1[x]) > line2) {
-        line2 = P3[x] - P1[x];
-    }
-
-    else if ((P3[y] - P1[y]) > line2) {
-        line2 = P3[y] - P1[y];
-    }
-    else if ((P1[y] - P3[y]) > line2) {
-        line2 = P1[y] - P3[y];
-    }
-
-    printf("Line 2: %f\n\n", line2);
-
-
-    float line3 = P4[x] - P1[x];
-    if ((P1[x] - P4[x]) > line3) {
-        line3 = P1[x] - P4[x];
-    }
-    else if ((P1[y] - P4[y]) > line3) {
-        line3 = P1[y] - P4[y];
-    }
-    else if ((P4[y] - P1[y]) > line3) {
-        line3 = P4[y] - P1[y];
-    }
-    printf("Line 3: %f\n\n", line3);
-
-
-    float line4 = P2[x] - P3[x];
-    if ((P3[x] - P2[x]) > line4) {
-        line4 = P3[x] - P2[x];
-    }
-    else if ((P3[y] - P2[y]) > line4) {
-        line4 = P3[y] - P2[y];
-    }
-    else if ((P2[y] - P3[y]) > line4) {
-        line4 = P2[y] - P3[y];
-    }
-
-
-    printf("Line 4: %f\n\n", line4);
-
-
-    float line5 = P2[x] - P4[x];
-    if ((P4[x] - P2[x]) > line5) {
-        line5 = P4[x] - P2[x];
-    }
-    else if ((P4[y] - P2[y]) > line5) {
-        line5 = P4[y] - P2[y];
-    }
-    else if ((P2[y] - P4[y]) > line5) {
-        line5 = P2[y] - P4[y];
-    }
-    printf("Line 5: %f\n\n", line5);
-
-
-    float line6 = P3[x] - P4[x];
-    if ((P4[x] - P3[x]) > line6) {
-        line6 = P4[x] - P3[x];
-    }
-    else if ((P4[y] - P3[y]) > line6) {
-        line6 = P4[y] - P3[y];
-    }
-    else if ((P3[y] - P4[y]) > line6) {
-        line6 = P3[y] - P4[y];
-    }
-    printf("Line 6: %f\n\n", line6);
-
-    int lines[MAX_LINES] = { line1, line2, line3, line4, line5, line6 };
-
-
-
-    return true;
+    
 
 
 
 
-    float Q1[COORD_LIMIT] = { P1[x],P1[y] };
-    float Q2[COORD_LIMIT] = { P2[x],P2[y] };
-    float Q3[COORD_LIMIT] = { P3[x],P3[y] };
-    float Q4[COORD_LIMIT] = { P4[x],P4[y] };
+    //float Q1[COORD_LIMIT] = { P1[x],P1[y] };
+    //float Q2[COORD_LIMIT] = { P2[x],P2[y] };
+    //float Q3[COORD_LIMIT] = { P3[x],P3[y] };
+    //float Q4[COORD_LIMIT] = { P4[x],P4[y] };
 
 
-    // Largest Y Value 
-    float LargestY = Q1[y];
+    //// Largest Y Value 
+    //float LargestY = Q1[y];
 
-    if (LargestY < Q2[y]) {
-        LargestY = Q2[y];
-    }
+    //if (LargestY < Q2[y]) {
+    //    LargestY = Q2[y];
+    //}
 
-    if (LargestY < Q3[y]) {
-        LargestY = Q3[y];
-    }
+    //if (LargestY < Q3[y]) {
+    //    LargestY = Q3[y];
+    //}
 
-    if (LargestY < Q4[y]) {
-        LargestY = Q4[y];
-    }
+    //if (LargestY < Q4[y]) {
+    //    LargestY = Q4[y];
+    //}
 
-    printf("The largest y is: %f\n", LargestY);
+    //printf("The largest y is: %f\n", LargestY);
 
 
-    // Lowest Y Value 
-    float LowestY = Q1[y];
+    //// Lowest Y Value 
+    //float LowestY = Q1[y];
 
-    if (LowestY > Q2[y]) {
-        LowestY = Q2[y];
-    }
+    //if (LowestY > Q2[y]) {
+    //    LowestY = Q2[y];
+    //}
 
-    if (LowestY > Q3[y]) {
-        LowestY = Q3[y];
-    }
+    //if (LowestY > Q3[y]) {
+    //    LowestY = Q3[y];
+    //}
 
-    if (LowestY > Q4[y]) {
-        LowestY = Q4[y];
-    }
+    //if (LowestY > Q4[y]) {
+    //    LowestY = Q4[y];
+    //}
 
-    printf("The Lowest y is: %f\n", LowestY);
+    //printf("The Lowest y is: %f\n", LowestY);
 
  
-    // Largest X Value 
-    float LargestX = Q1[x];
+    //// Largest X Value 
+    //float LargestX = Q1[x];
 
-    if (LargestX < Q2[x]) {
-        LargestX = Q2[x];
-    }
+    //if (LargestX < Q2[x]) {
+    //    LargestX = Q2[x];
+    //}
 
-    if (LargestX < Q3[x]) {
-        LargestX = Q3[x];
-    }
+    //if (LargestX < Q3[x]) {
+    //    LargestX = Q3[x];
+    //}
 
-    if (LargestX < Q4[x]) {
-        LargestX = Q4[x];
-    }
+    //if (LargestX < Q4[x]) {
+    //    LargestX = Q4[x];
+    //}
 
-    printf("The largest x is: %f\n", LargestX);
+    //printf("The largest x is: %f\n", LargestX);
 
-    // Lowest X Value 
-    float LowestX = Q1[x];
+    //// Lowest X Value 
+    //float LowestX = Q1[x];
 
-    if (LowestX > Q2[x]) {
-        LowestX = Q2[x];
-    }
+    //if (LowestX > Q2[x]) {
+    //    LowestX = Q2[x];
+    //}
 
-    if (LowestX > Q3[x]) {
-        LowestX = Q3[x];
-    }
+    //if (LowestX > Q3[x]) {
+    //    LowestX = Q3[x];
+    //}
 
-    if (LowestX > Q4[x]) {
-        LowestX = Q4[x];
-    }
+    //if (LowestX > Q4[x]) {
+    //    LowestX = Q4[x];
+    //}
 
-    printf("The largest x is: %f\n", LowestX);
-
-
-    float BL[2] = { LowestX, LowestY };
-    float TL[2] = { LowestX, LargestY };
-    float BR[2] = { LargestX, LowestY };
-    float TR[2] = { LargestX, LargestY };
-
-    // BL and TL Share x values
-    // BL and BR Share y values
-    // BR and TR share x values
-    // TR and TL share y values
-
-    printf("Bottom Left: %f, %f\n", LowestX, LowestY);
-    printf("Top Left: %f, %f\n", LowestX, LargestY);
-    printf("Bottom Right: %f, %f\n", LargestX, LargestY);
-    printf("Top Right: %f, %f\n", LargestX, LowestY);
-
-    if (BL[x] == TL[x] && BL[y] == TL[y]) {
-        printf("This is not a triangle\n");
-    }
-    else if (BL[x] == BR[x] && BL[y] == BR[y]) {
-        printf("This is not a triangle\n");
-    }
-    else if (TR[x] == BR[x] && TR[y] == BR[y]) {
-        printf("This is not a triangle\n");
-    }
-    else if (TR[x] == TL[x] && TR[y] == BR[y]) {
-        printf("This is not a triangle\n");
-    }
-    else {
-
-        if (BL[x] == TL[x] && BL[y] == BR[y] && BR[x] == TR[x] && TR[y] == TL[y]) {
-
-            printf("This is a rectangle\n");
-        }
-
-        else {
-
-            printf("This is not a triangle\n");
-        }
-    }
-
-    
-    float squareOfLengthTLX = (BL[0] - TL[0]) * (BL[0] - TL[0]);
-    float squareOfLengthBLY = (BL[1] - TL[1]) * (BL[1] - TL[1]);
-    float squareOfWidthBRX = (BR[0] - BL[0]) * (BR[0] - BL[0]);
-    float squareOfWidthBRY = (BR[1] - BL[1]) * (BR[1] - BL[1]);
+    //printf("The largest x is: %f\n", LowestX);
 
 
-    float length = sqrt(squareOfLengthTLX + squareOfLengthBLY);
+    //float BL[2] = { LowestX, LowestY };
+    //float TL[2] = { LowestX, LargestY };
+    //float BR[2] = { LargestX, LowestY };
+    //float TR[2] = { LargestX, LargestY };
 
-    float width = sqrt(squareOfWidthBRX + squareOfWidthBRY);
+    //// BL and TL Share x values
+    //// BL and BR Share y values
+    //// BR and TR share x values
+    //// TR and TL share y values
 
-    
+    //printf("Bottom Left: %f, %f\n", LowestX, LowestY);
+    //printf("Top Left: %f, %f\n", LowestX, LargestY);
+    //printf("Bottom Right: %f, %f\n", LargestX, LargestY);
+    //printf("Top Right: %f, %f\n", LargestX, LowestY);
 
+    //if (BL[x] == TL[x] && BL[y] == TL[y]) {
+    //    printf("This is not a triangle\n");
+    //}
+    //else if (BL[x] == BR[x] && BL[y] == BR[y]) {
+    //    printf("This is not a triangle\n");
+    //}
+    //else if (TR[x] == BR[x] && TR[y] == BR[y]) {
+    //    printf("This is not a triangle\n");
+    //}
+    //else if (TR[x] == TL[x] && TR[y] == BR[y]) {
+    //    printf("This is not a triangle\n");
+    //}
+    //else {
+
+    //    if (BL[x] == TL[x] && BL[y] == BR[y] && BR[x] == TR[x] && TR[y] == TL[y]) {
+
+    //        printf("This is a rectangle\n");
+    //    }
+
+    //    else {
+
+    //        printf("This is not a triangle\n");
+    //    }
+    //}
+
+    //
+    //float squareOfLengthTLX = (BL[x] - TL[x]) * (BL[x] - TL[x]);
+    //float squareOfLengthBLY = (BL[y] - TL[y]) * (BL[y] - TL[y]);
+    //float squareOfWidthBRX = (BR[x] - BL[x]) * (BR[x] - BL[x]);
+    //float squareOfWidthBRY = (BR[y] - BL[y]) * (BR[y] - BL[y]);
+
+
+    //float length = sqrt(squareOfLengthTLX + squareOfLengthBLY);
+
+    //float width = sqrt(squareOfWidthBRX + squareOfWidthBRY);
+
+    //
+
+return true;
 }
 
 float perimeter(float length, float width) {
