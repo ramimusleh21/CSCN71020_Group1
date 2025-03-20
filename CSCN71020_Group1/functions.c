@@ -133,6 +133,7 @@ bool is_valid_input(char* input) {
 
     return true;
 }
+
 float get_valid_input(char* prompt) {
     char input[NUMLIMIT];
     float value = 0;
@@ -151,6 +152,28 @@ float get_valid_input(char* prompt) {
     return value;
 }
 
+
+int IsitRectangle(float RectangleLines[NUM_OF_SIDES] ) {
+    if (RectangleLines[0] != RectangleLines[1]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[2] != RectangleLines[3]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[4] != RectangleLines[5]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
+        printf("This is Not a Rectangle\n");
+        printf("This is a square \n");
+        return 1;
+    }
+    printf("This is a Rectangle\n");
+    return 0;
+}
 
 
 void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT]) {
@@ -214,11 +237,24 @@ void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[CO
         }
     }
     printf("%f %f %f %f %f %f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
-
-    // ***
-
     
+   IsitRectangle(RectangleLines);
 
+   //Add logic that only runs these functions if it is
+   // a rectangle
+
+   float length = RectangleLines[2];
+   float width = RectangleLines[4];
+
+
+       float perimeter = 2 * (length + width);
+
+       printf("The perimeter is %f\n", perimeter);
+
+       float area = length * width;
+       printf("The area is %f\n", area);
+    
+    // ***
 
 
 
@@ -356,16 +392,21 @@ return true;
 }
 
 float perimeter(float length, float width) {
+    printf("%f %f\n", length, width);
 
     float perimeter = 2 * (length + width);
+
+    printf("The perimeter is %f\n", perimeter);
     return perimeter;
 
 }
 
 
 float area(float length, float width) {
+    printf("%f %f\n", length, width);
 
     float area = length * width;
+    printf("The area is %f\n", area);
     return area;
 
 }
