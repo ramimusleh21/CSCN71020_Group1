@@ -368,6 +368,35 @@ void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[CO
             printf("This is not a triangle\n");
         }
     }
+
+    
+    float squareOfLengthTLX = (BL[0] - TL[0]) * (BL[0] - TL[0]);
+    float squareOfLengthBLY = (BL[1] - TL[1]) * (BL[1] - TL[1]);
+    float squareOfWidthBRX = (BR[0] - BL[0]) * (BR[0] - BL[0]);
+    float squareOfWidthBRY = (BR[1] - BL[1]) * (BR[1] - BL[1]);
+
+
+    float length = sqrt(squareOfLengthTLX + squareOfLengthBLY);
+
+    float width = sqrt(squareOfWidthBRX + squareOfWidthBRY);
+
+    
+
+}
+
+float perimeter(float length, float width) {
+
+    float perimeter = 2 * (length + width);
+    return perimeter;
+
+}
+
+
+float area(float length, float width) {
+
+    float area = length * width;
+    return area;
+
 }
 
 
