@@ -14,7 +14,8 @@
 
 
 int main() {
-    bool program = true;;
+    bool program = true;
+    
 
     while (program) {
        
