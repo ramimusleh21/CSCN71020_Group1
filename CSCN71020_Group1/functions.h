@@ -15,7 +15,7 @@ double clamp(double value, double min, double max);
 void calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C);
 
 // RECTANGLE FUNCTIONS
-
+/*
 bool GetRectangleInput(bool program);
 
 void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], 
@@ -25,3 +25,5 @@ int IsitRectangle(float RectangleLines[NUM_OF_SIDES]);
 
 float perimeter(float length, float width);
 float area(float length, float width);
+
+*/
