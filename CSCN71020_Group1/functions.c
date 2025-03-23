@@ -8,98 +8,105 @@
 
 #include "globals.h"
 
+#define PI 3.14159265358979323846;
 
 // TRIANGLE FUNCTIONS
 
 bool validate_triangle_input(char* side) {
     int dot_counter = 0;
-    int length = strlen(side);
-
+    int length = (int)strlen(side);
     if (length == 0) {
         fprintf(stderr, "Invalid Input: Empty input\n");
-        return false;
+        exit(EXIT_FAILURE);
     }
+
     for (int i = 0; i < length; i++) {
         if (isdigit(side[i])) {
             continue;
         }
-        else {
-            fprintf(stderr, "Please Enter a Number as Input ");
-            return false;
-        }
+
         if (side[i] == '.') {
             dot_counter++;
-
             if (dot_counter > 1) {
                 fprintf(stderr, "Invalid Input: More than one decimal point\n");
-                return false;
+                exit(EXIT_FAILURE);
             }
             continue;
         }
 
-        // *** Is 0 supposed to be allowed as an input?? ***
-
         fprintf(stderr, "Invalid Input: Non-numeric character\n");
-        return false;
+        exit(EXIT_FAILURE);
     }
+
 
     return true;
 }
 
+char* get_input(const char* prompt) {
+    static char buffer[NUMLIMIT];  
 
-bool get_triangle_input(bool program) {
+    while (1) {
+        printf("%s", prompt);
+        if (scanf("%s", buffer) != 1) {
+            fprintf(stderr, "Error reading input. Please try again.\n");
+            continue;  
+        }
 
-    char sideA[NUMLIMIT];
-    char sideB[NUMLIMIT];
-    char sideC[NUMLIMIT];
-
-    printf("Enter the length of the first side: ");
-   int SideASymbols = scanf("%s", sideA);
-    program = validate_triangle_input(sideA);
-    
-    if(program == false){
-        return program;
+        if (validate_triangle_input(buffer)) {
+            return buffer; 
+        }
+        else {
+            fprintf(stderr, "Invalid input. Please enter a valid number.\n");
+        }
     }
+}
 
-    printf("Enter the length of the second side: ");
-    int SideBSymbols = scanf("%s", sideB);
-    program = validate_triangle_input(sideB);
+void get_triangle_input(char* sideA, char* sideB, char* sideC) {
 
-    if (program == false) {
-        return program;
-    }
+    strcpy(sideA, get_input("Enter the length of the first side: "));
+    strcpy(sideB, get_input("Enter the length of the second side: "));
+    strcpy(sideC, get_input("Enter the length of the third side: "));
+}
 
-    printf("Enter the length of the third side: ");
-    int SideCSymbols = scanf("%s", sideC);
-    program = validate_triangle_input(sideC);
-
-    if (program == false) {
-        return program;
-    }
-
-
-    int sideA_int = atoi(sideA);
-    int sideB_int = atoi(sideB);
-    int sideC_int = atoi(sideC);
-    
-    if (sideA_int + sideB_int > sideC_int && sideB_int + sideC_int > sideA_int && sideA_int + sideC_int > sideB_int) {
-        printf("This is a triangle");
+char * is_it_triangle(float sideA_float,float sideB_float,float sideC_float) {
+    if (sideA_float + sideB_float > sideC_float && sideB_float + sideC_float > sideA_float && sideA_float + sideC_float > sideB_float) {
+        return "This is a triangle";
     }
     else {
-        printf("This is a not triangle");
+        return "This is a not triangle";
     }
-
-    return program;
 }
 
 
+double clamp(double value, double min, double max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
 
+void calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C) {
+  
+    double cos_A = (sideB_float * sideB_float + sideC_float * sideC_float - sideA_float * sideA_float) / (2 * sideB_float * sideC_float);
+    double cos_B = (sideA_float * sideA_float + sideC_float * sideC_float - sideB_float * sideB_float) / (2 * sideA_float * sideC_float);
+    double cos_C = (sideA_float * sideA_float + sideB_float * sideB_float - sideC_float * sideC_float) / (2 * sideA_float * sideB_float);
+
+    cos_A = clamp(cos_A, -1.0, 1.0);
+    cos_B = clamp(cos_B, -1.0, 1.0);
+    cos_C = clamp(cos_C, -1.0, 1.0);
+
+    *angle_A = acos(cos_A) * 180.0 / PI;
+    *angle_B = acos(cos_B) * 180.0 / PI;
+    *angle_C = acos(cos_C) * 180.0 / PI;
+
+
+    printf("The angles of the triangle are: A = %.2f, B = %.2f, C = %.2f\n", *angle_A, *angle_B, *angle_C);
+}
 
 
 
 // RECTANGLE FUNCTIONS
 
-
+/*
 bool is_valid_input(char* input) {
     int dot_counter = 0;
     int length = strlen(input);
@@ -456,3 +463,4 @@ bool MainMenu(bool program) {
         return program;
     }
 }
+*/
