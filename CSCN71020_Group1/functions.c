@@ -114,7 +114,6 @@ bool is_valid_input(char* input) {
 
     if (length == 0) {
         printf("Invalid Input: Empty input\n");
-        return false;
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < length; i++) {
@@ -128,17 +127,24 @@ bool is_valid_input(char* input) {
             dot_counter++;
             if (dot_counter > 1) {
                 printf("Invalid Input: More than one decimal point\n");
-                return false;
                 exit(EXIT_FAILURE);
             }
             continue;
         }
         printf("Invalid Input: Non-numeric character\n");
-        return false;
         exit(EXIT_FAILURE);
     }
 
     return true;
+}
+
+
+char* get_input(const char* prompt) {
+    static char input[NUMLIMIT];
+    printf("%s", prompt);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0; // Remove newline character
+    return input;
 }
 
 float get_valid_input(char* prompt) {
@@ -439,40 +445,114 @@ bool GetRectangleInput(bool program) {
 }
 
 
-
-// MENU FUNCTION
-
-bool MainMenu(bool program) {
-
-    // Initialize
-    int choice = 0;
-
-    // Get Input
-    printf("\nMenu:\n1. Triangle Feature\n2. Rectangle Feature\n3. Exit\n");
-    printf("Enter your choice: ");
-    int userChoice = scanf("%d", &choice);
+*/
 
 
+bool is_valid_input(char* input) {
+    int dot_counter = 0;
+    int length = (int)strlen(input);
 
+    if (length == 0) {
+        printf("Invalid Input: Empty input\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < length; i++) {
+        if (isdigit(input[i])) {
+            continue;
+        }
+        if ((i == 0) && (input[i] == '+' || input[i] == '-')) {
+            continue;
+        }
+        if (input[i] == '.') {
+            dot_counter++;
+            if (dot_counter > 1) {
+                printf("Invalid Input: More than one decimal point\n");
+                exit(EXIT_FAILURE);
+            }
+            continue;
+        }
+        printf("Invalid Input: Non-numeric character\n");
+        exit(EXIT_FAILURE);
+    }
 
-    // MENU FUNCTION
-    switch (choice)
-    {
-    case 1:
-        printf("Tri\n\n");
-        program = get_triangle_input(program);
-        return program;
-    case 2:
-        program = GetRectangleInput(program);
-        return program;
-    case 3:
-        program = false;
-        return program;
+    return true;
+}
 
-    default:
-        printf("Invalid choice. Try again.\n");
-        program = false;
-        return program;
+char* get_input_rec(const char* prompt) {
+    static char input[NUMLIMIT];
+    printf("%s", prompt);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0; // Remove newline character
+    return input;
+}
+
+float get_valid_input(const char* prompt) {
+    char* input;
+    float value = 0;
+    while (1) {
+        input = get_input(prompt);
+        if (is_valid_input((char*)input)) {
+            value = (float)atof(input);
+            return value; // Return immediately if valid
+        }
+        else {
+            printf("Invalid input. Please enter a valid number.\n");
+        }
     }
 }
-*/
+
+
+int IsitRectangle(float RectangleLines[NUM_OF_SIDES]) {
+
+    if (RectangleLines[0] != RectangleLines[3]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+        return 1;
+    }
+    if (RectangleLines[1] != RectangleLines[4]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+        return 1;
+    }
+    if (RectangleLines[2] != RectangleLines[5]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+        return 1;
+    }
+
+    float diagonal1 = (float)sqrt(pow(RectangleLines[0], 2) + pow(RectangleLines[1], 2));  
+    float diagonal2 = (float)sqrt(pow(RectangleLines[2], 2) + pow(RectangleLines[3], 2));  
+
+    if (fabs(diagonal1 - diagonal2) > 0.0001) { 
+        printf("This is Not a Rectangle: Diagonals are not equal\n");
+        return 1;
+    }
+
+    printf("This is a Rectangle\n");
+    return 0; 
+}
+
+void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]) {
+    RectangleLines[0] = (float)sqrt(pow(P2[0] - P1[0], 2) + pow(P2[1] - P1[1], 2));
+    RectangleLines[1] = (float)sqrt(pow(P3[0] - P1[0], 2) + pow(P3[1] - P1[1], 2)); 
+    RectangleLines[2] = (float)sqrt(pow(P4[0] - P1[0], 2) + pow(P4[1] - P1[1], 2)); 
+    RectangleLines[3] = (float)sqrt(pow(P3[0] - P2[0], 2) + pow(P3[1] - P2[1], 2)); 
+    RectangleLines[4] = (float)sqrt(pow(P4[0] - P2[0], 2) + pow(P4[1] - P2[1], 2)); 
+    RectangleLines[5] = (float)sqrt(pow(P4[0] - P3[0], 2) + pow(P4[1] - P3[1], 2)); 
+}
+
+
+float calculate_perimeter(float length, float width) {
+    return 2 * (length + width);
+}
+
+
+float calculate_area(float length, float width) {
+    return length * width;
+}
+
+
+
+
+
+
+
+
+

@@ -34,7 +34,36 @@ int main() {
             }
         }
         else if (choice == 2) {
-            // GetRectangleInput(true); need to debug
+            float point1 = get_valid_input("Enter point1 (x): ");
+            float point2 = get_valid_input("Enter point2 (y): ");
+            float point3 = get_valid_input("Enter point3 (x): ");
+            float point4 = get_valid_input("Enter point4 (y): ");
+            float point5 = get_valid_input("Enter point5 (x): ");
+            float point6 = get_valid_input("Enter point6 (y): ");
+            float point7 = get_valid_input("Enter point7 (x): ");
+            float point8 = get_valid_input("Enter point8 (y): ");
+
+            float corner1[COORD_LIMIT] = { point1, point2 };
+            float corner2[COORD_LIMIT] = { point3, point4 };
+            float corner3[COORD_LIMIT] = { point5, point6 };
+            float corner4[COORD_LIMIT] = { point7, point8 };
+
+            float RectangleLines[NUM_OF_SIDES];
+            calculate_distances(corner1, corner2, corner3, corner4, RectangleLines);
+
+            int isRectangle = IsitRectangle(RectangleLines);
+            if (isRectangle == 0) {
+                float length = RectangleLines[2];
+                float width = RectangleLines[4];
+
+                float perimeter = calculate_perimeter(length, width);
+                printf("The perimeter is %.2f\n", perimeter);
+
+                float area = calculate_area(length, width);
+                printf("The area is %.2f\n", area);
+            }
+
+            return 0;
         }
         else if (choice == 3) {
             break;

@@ -15,6 +15,15 @@ double clamp(double value, double min, double max);
 void calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C);
 
 // RECTANGLE FUNCTIONS
+
+bool is_valid_input(char* input);
+void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]);
+int IsitRectangle(float RectangleLines[NUM_OF_SIDES]);
+float get_valid_input(const char* prompt);
+char* get_input_rec(const char* prompt);
+float calculate_area(float length, float width);
+float calculate_area(float length, float width);
+
 /*
 bool GetRectangleInput(bool program);
 
