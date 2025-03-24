@@ -59,8 +59,6 @@ int main() {
                 printf("The area is %.2f\n", area);
             }
 
-            return 0;
-        }
         else if (choice == 3) {
             break;
         }

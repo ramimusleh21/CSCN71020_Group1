@@ -166,27 +166,7 @@ float get_valid_input(char* prompt) {
 }
 
 
-int IsitRectangle(float RectangleLines[NUM_OF_SIDES] ) {
-    if (RectangleLines[0] != RectangleLines[1]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[2] != RectangleLines[3]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[4] != RectangleLines[5]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
-        printf("This is Not a Rectangle\n");
-        printf("This is a square \n");
-        return 1;
-    }
-    printf("This is a Rectangle\n");
-    return 0;
-}
+
 
 
 void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT]) {
@@ -515,41 +495,69 @@ void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[
             }
         }
 
-        if (LowestElement != i) {
+char* get_input_rec(const char* prompt) {
+    static char input[NUMLIMIT];
+    printf("%s", prompt);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0; // Remove newline character
+    return input;
+}
 
-            temp = RectangleLines[i];
-            RectangleLines[i] = RectangleLines[LowestElement];
-            RectangleLines[LowestElement] = temp;
+float get_valid_input(const char* prompt) {
+    char* input;
+    float value = 0;
+    while (1) {
+        input = get_input(prompt);
+        if (is_valid_input((char*)input)) {
+            value = (float)atof(input);
+            return value; // Return immediately if valid
+        }
+        else {
+            printf("Invalid input. Please enter a valid number.\n");
         }
     }
-    printf("%.2f %.2f %.2f %.2f %.2f %.2f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
 }
 
 
 int IsitRectangle(float RectangleLines[NUM_OF_SIDES]) {
-    if (RectangleLines[0] != RectangleLines[1]) {
-        printf("This is Not a Rectangle\n");
+
+    if (RectangleLines[0] != RectangleLines[3]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
         return 1;
     }
-    if (RectangleLines[2] != RectangleLines[3]) {
-        printf("This is Not a Rectangle\n");
+    if (RectangleLines[1] != RectangleLines[4]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
         return 1;
     }
-    if (RectangleLines[4] != RectangleLines[5]) {
-        printf("This is Not a Rectangle\n");
+    if (RectangleLines[2] != RectangleLines[5]) {
+        printf("This is Not a Rectangle: Opposite sides are not equal\n");
         return 1;
     }
-    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
-        printf("This is Not a Rectangle\n");
+
+    float diagonal1 = (float)sqrt(pow(RectangleLines[0], 2) + pow(RectangleLines[1], 2));  
+    float diagonal2 = (float)sqrt(pow(RectangleLines[2], 2) + pow(RectangleLines[3], 2));  
+
+    if (fabs(diagonal1 - diagonal2) > 0.0001) { 
+        printf("This is Not a Rectangle: Diagonals are not equal\n");
         return 1;
     }
+
     printf("This is a Rectangle\n");
     return 0;
 }
 
+void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]) {
+    RectangleLines[0] = (float)sqrt(pow(P2[0] - P1[0], 2) + pow(P2[1] - P1[1], 2));
+    RectangleLines[1] = (float)sqrt(pow(P3[0] - P1[0], 2) + pow(P3[1] - P1[1], 2)); 
+    RectangleLines[2] = (float)sqrt(pow(P4[0] - P1[0], 2) + pow(P4[1] - P1[1], 2)); 
+    RectangleLines[3] = (float)sqrt(pow(P3[0] - P2[0], 2) + pow(P3[1] - P2[1], 2)); 
+    RectangleLines[4] = (float)sqrt(pow(P4[0] - P2[0], 2) + pow(P4[1] - P2[1], 2)); 
+    RectangleLines[5] = (float)sqrt(pow(P4[0] - P3[0], 2) + pow(P4[1] - P3[1], 2)); 
+}
+
+
 float calculate_perimeter(float length, float width) {
-    float answer = 2 * (length + width);
-    return answer;
+    return 2 * (length + width);
 }
 
 
