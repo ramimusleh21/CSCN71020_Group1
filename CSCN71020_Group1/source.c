@@ -64,7 +64,6 @@ int main() {
                 float area = calculate_area(length, width);
                 printf("The area is %.2f\n", area);
             }
-
             return 0; 
         }
 
