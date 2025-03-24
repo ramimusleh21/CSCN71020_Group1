@@ -34,19 +34,15 @@ int main() {
             }
         }
         else if (choice == 2) {
-            float point1 = get_valid_input("Enter point1 (x): ");
-            float point2 = get_valid_input("Enter point2 (y): ");
-            float point3 = get_valid_input("Enter point3 (x): ");
-            float point4 = get_valid_input("Enter point4 (y): ");
-            float point5 = get_valid_input("Enter point5 (x): ");
-            float point6 = get_valid_input("Enter point6 (y): ");
-            float point7 = get_valid_input("Enter point7 (x): ");
-            float point8 = get_valid_input("Enter point8 (y): ");
+            (void)getchar();
 
-            float corner1[COORD_LIMIT] = { point1, point2 };
-            float corner2[COORD_LIMIT] = { point3, point4 };
-            float corner3[COORD_LIMIT] = { point5, point6 };
-            float corner4[COORD_LIMIT] = { point7, point8 };
+            float rectangle_coords[8];
+            get_valid_floats(rectangle_coords, 8);
+
+            float corner1[COORD_LIMIT] = { rectangle_coords[0], rectangle_coords[1] };
+            float corner2[COORD_LIMIT] = { rectangle_coords[2], rectangle_coords[3] };
+            float corner3[COORD_LIMIT] = { rectangle_coords[4], rectangle_coords[5] };
+            float corner4[COORD_LIMIT] = { rectangle_coords[6], rectangle_coords[7] };
 
             float RectangleLines[NUM_OF_SIDES];
             calculate_distances(corner1, corner2, corner3, corner4, RectangleLines);

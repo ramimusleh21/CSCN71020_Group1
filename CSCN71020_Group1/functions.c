@@ -448,108 +448,114 @@ bool GetRectangleInput(bool program) {
 */
 
 
-bool is_valid_input(char* input) {
-    int dot_counter = 0;
-    int length = (int)strlen(input);
+void clear_input_buffer() {
+    while (getchar() != '\n');
+}
 
-    if (length == 0) {
-        printf("Invalid Input: Empty input\n");
-        exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < length; i++) {
-        if (isdigit(input[i])) {
-            continue;
-        }
-        if ((i == 0) && (input[i] == '+' || input[i] == '-')) {
-            continue;
-        }
-        if (input[i] == '.') {
-            dot_counter++;
-            if (dot_counter > 1) {
-                printf("Invalid Input: More than one decimal point\n");
-                exit(EXIT_FAILURE);
+void get_valid_floats(float* inputs, int num_inputs) {
+    for (int i = 0; i < num_inputs; i++) {
+        while (1) {
+            printf("Enter point %d: ", i + 1);
+            int result = scanf("%f", &inputs[i]);
+
+            if (result != 1) {
+                clear_input_buffer();
+                printf("Invalid input. Please enter a valid float.\n");
             }
-            continue;
-        }
-        printf("Invalid Input: Non-numeric character\n");
-        exit(EXIT_FAILURE);
-    }
-
-    return true;
-}
-
-char* get_input_rec(const char* prompt) {
-    static char input[NUMLIMIT];
-    printf("%s", prompt);
-    fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = 0; // Remove newline character
-    return input;
-}
-
-float get_valid_input(const char* prompt) {
-    char* input;
-    float value = 0;
-    while (1) {
-        input = get_input(prompt);
-        if (is_valid_input((char*)input)) {
-            value = (float)atof(input);
-            return value; // Return immediately if valid
-        }
-        else {
-            printf("Invalid input. Please enter a valid number.\n");
+            else {
+                break;
+            }
         }
     }
+}
+
+void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]) {
+    float line1x = (P2[x] - P1[x]) * (P2[x] - P1[x]);
+    float line1y = (P2[y] - P1[y]) * (P2[y] - P1[y]);
+
+    float line2x = (P3[x] - P1[x]) * (P3[x] - P1[x]);
+    float line2y = (P3[y] - P1[y]) * (P3[y] - P1[y]);
+
+    float line3x = (P4[x] - P1[x]) * (P4[x] - P1[x]);
+    float line3y = (P4[y] - P1[y]) * (P4[y] - P1[y]);
+
+    float line4x = (P3[x] - P2[x]) * (P3[x] - P2[x]);
+    float line4y = (P3[y] - P2[y]) * (P3[y] - P2[y]);
+
+    float line5x = (P4[x] - P2[x]) * (P4[x] - P2[x]);
+    float line5y = (P4[y] - P2[y]) * (P4[y] - P2[y]);
+
+    float line6x = (P4[x] - P3[x]) * (P4[x] - P3[x]);
+    float line6y = (P4[y] - P3[y]) * (P4[y] - P3[y]);
+
+
+    float line1 = (float)sqrt(line1x + line1y);
+    float line2 = (float)sqrt(line2x + line2y);
+    float line3 = (float)sqrt(line3x + line3y);
+    float line4 = (float)sqrt(line4x + line4y);
+    float line5 = (float)sqrt(line5x + line5y);
+    float line6 = (float)sqrt(line6x + line6y);
+
+    RectangleLines[0] = line1;
+    RectangleLines[1] = line2;
+    RectangleLines[2] = line3;
+    RectangleLines[3] = line4;
+    RectangleLines[4] = line5;
+    RectangleLines[5] = line6;
+
+    float temp = 0;
+    for (int i = 0; i < NUM_OF_SIDES - 1; i++) {
+        int LowestElement = i;
+
+        for (int j = i + 1; j < NUM_OF_SIDES; j++) {
+            {
+                if (RectangleLines[j] > RectangleLines[LowestElement]) {
+                    LowestElement = j;
+                }
+            }
+        }
+
+        if (LowestElement != i) {
+
+            temp = RectangleLines[i];
+            RectangleLines[i] = RectangleLines[LowestElement];
+            RectangleLines[LowestElement] = temp;
+        }
+    }
+    printf("%.2f %.2f %.2f %.2f %.2f %.2f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
 }
 
 
 int IsitRectangle(float RectangleLines[NUM_OF_SIDES]) {
-
-    if (RectangleLines[0] != RectangleLines[3]) {
-        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+    if (RectangleLines[0] != RectangleLines[1]) {
+        printf("This is Not a Rectangle\n");
         return 1;
     }
-    if (RectangleLines[1] != RectangleLines[4]) {
-        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+    if (RectangleLines[2] != RectangleLines[3]) {
+        printf("This is Not a Rectangle\n");
         return 1;
     }
-    if (RectangleLines[2] != RectangleLines[5]) {
-        printf("This is Not a Rectangle: Opposite sides are not equal\n");
+    if (RectangleLines[4] != RectangleLines[5]) {
+        printf("This is Not a Rectangle\n");
         return 1;
     }
-
-    float diagonal1 = (float)sqrt(pow(RectangleLines[0], 2) + pow(RectangleLines[1], 2));  
-    float diagonal2 = (float)sqrt(pow(RectangleLines[2], 2) + pow(RectangleLines[3], 2));  
-
-    if (fabs(diagonal1 - diagonal2) > 0.0001) { 
-        printf("This is Not a Rectangle: Diagonals are not equal\n");
+    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
+        printf("This is Not a Rectangle\n");
         return 1;
     }
-
     printf("This is a Rectangle\n");
-    return 0; 
+    return 0;
 }
-
-void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]) {
-    RectangleLines[0] = (float)sqrt(pow(P2[0] - P1[0], 2) + pow(P2[1] - P1[1], 2));
-    RectangleLines[1] = (float)sqrt(pow(P3[0] - P1[0], 2) + pow(P3[1] - P1[1], 2)); 
-    RectangleLines[2] = (float)sqrt(pow(P4[0] - P1[0], 2) + pow(P4[1] - P1[1], 2)); 
-    RectangleLines[3] = (float)sqrt(pow(P3[0] - P2[0], 2) + pow(P3[1] - P2[1], 2)); 
-    RectangleLines[4] = (float)sqrt(pow(P4[0] - P2[0], 2) + pow(P4[1] - P2[1], 2)); 
-    RectangleLines[5] = (float)sqrt(pow(P4[0] - P3[0], 2) + pow(P4[1] - P3[1], 2)); 
-}
-
 
 float calculate_perimeter(float length, float width) {
-    return 2 * (length + width);
+    float answer = 2 * (length + width);
+    return answer;
 }
 
 
 float calculate_area(float length, float width) {
     return length * width;
 }
-
-
-
 
 
 
