@@ -114,7 +114,6 @@ bool is_valid_input(char* input) {
 
     if (length == 0) {
         printf("Invalid Input: Empty input\n");
-        return false;
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < length; i++) {
@@ -128,17 +127,24 @@ bool is_valid_input(char* input) {
             dot_counter++;
             if (dot_counter > 1) {
                 printf("Invalid Input: More than one decimal point\n");
-                return false;
                 exit(EXIT_FAILURE);
             }
             continue;
         }
         printf("Invalid Input: Non-numeric character\n");
-        return false;
         exit(EXIT_FAILURE);
     }
 
     return true;
+}
+
+
+char* get_input(const char* prompt) {
+    static char input[NUMLIMIT];
+    printf("%s", prompt);
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0; // Remove newline character
+    return input;
 }
 
 float get_valid_input(char* prompt) {
@@ -160,27 +166,7 @@ float get_valid_input(char* prompt) {
 }
 
 
-int IsitRectangle(float RectangleLines[NUM_OF_SIDES] ) {
-    if (RectangleLines[0] != RectangleLines[1]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[2] != RectangleLines[3]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[4] != RectangleLines[5]) {
-        printf("This is Not a Rectangle\n");
-        return 1;
-    }
-    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
-        printf("This is Not a Rectangle\n");
-        printf("This is a square \n");
-        return 1;
-    }
-    printf("This is a Rectangle\n");
-    return 0;
-}
+
 
 
 void RectangleFunction(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT]) {
@@ -439,40 +425,125 @@ bool GetRectangleInput(bool program) {
 }
 
 
+*/
 
-// MENU FUNCTION
+void clear_input_buffer() {
+    while (getchar() != '\n');
+}
 
-bool MainMenu(bool program) {
+void get_valid_floats(float* inputs, int num_inputs) {
+    for (int i = 0; i < num_inputs; i++) {
+        while (1) {
+            printf("Enter point %d: ", i + 1);
+            int result = scanf("%f", &inputs[i]);
 
-    // Initialize
-    int choice = 0;
-
-    // Get Input
-    printf("\nMenu:\n1. Triangle Feature\n2. Rectangle Feature\n3. Exit\n");
-    printf("Enter your choice: ");
-    int userChoice = scanf("%d", &choice);
-
-
-
-
-    // MENU FUNCTION
-    switch (choice)
-    {
-    case 1:
-        printf("Tri\n\n");
-        program = get_triangle_input(program);
-        return program;
-    case 2:
-        program = GetRectangleInput(program);
-        return program;
-    case 3:
-        program = false;
-        return program;
-
-    default:
-        printf("Invalid choice. Try again.\n");
-        program = false;
-        return program;
+            if (result != 1) {
+                clear_input_buffer();
+                printf("Invalid input. Please enter a valid float.\n");
+            }
+            else {
+                break;
+            }
+        }
     }
 }
-*/
+
+
+
+int IsitRectangle(float RectangleLines[NUM_OF_SIDES]) {
+    if (RectangleLines[0] != RectangleLines[1]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[2] != RectangleLines[3]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[4] != RectangleLines[5]) {
+        printf("This is Not a Rectangle\n");
+        return 1;
+    }
+    if (RectangleLines[2] == RectangleLines[5] && RectangleLines[3] == RectangleLines[4]) {
+        printf("This is Not a Rectangle\n");
+        printf("This is a square \n");
+        return 1;
+    }
+    printf("This is a Rectangle\n");
+    return 0;
+}
+
+void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[COORD_LIMIT], float P4[COORD_LIMIT], float RectangleLines[NUM_OF_SIDES]) {
+    float line1x = (P2[x] - P1[x]) * (P2[x] - P1[x]);
+    float line1y = (P2[y] - P1[y]) * (P2[y] - P1[y]);
+
+    float line2x = (P3[x] - P1[x]) * (P3[x] - P1[x]);
+    float line2y = (P3[y] - P1[y]) * (P3[y] - P1[y]);
+
+    float line3x = (P4[x] - P1[x]) * (P4[x] - P1[x]);
+    float line3y = (P4[y] - P1[y]) * (P4[y] - P1[y]);
+
+    float line4x = (P3[x] - P2[x]) * (P3[x] - P2[x]);
+    float line4y = (P3[y] - P2[y]) * (P3[y] - P2[y]);
+
+    float line5x = (P4[x] - P2[x]) * (P4[x] - P2[x]);
+    float line5y = (P4[y] - P2[y]) * (P4[y] - P2[y]);
+
+    float line6x = (P4[x] - P3[x]) * (P4[x] - P3[x]);
+    float line6y = (P4[y] - P3[y]) * (P4[y] - P3[y]);
+
+
+    float line1 = (float)sqrt(line1x + line1y);
+    float line2 = (float)sqrt(line2x + line2y);
+    float line3 = (float)sqrt(line3x + line3y);
+    float line4 = (float)sqrt(line4x + line4y);
+    float line5 = (float)sqrt(line5x + line5y);
+    float line6 = (float)sqrt(line6x + line6y);
+    
+    RectangleLines[0] = line1;
+    RectangleLines[1] = line2;
+    RectangleLines[2] = line3;
+    RectangleLines[3] = line4;
+    RectangleLines[4] = line5;
+    RectangleLines[5] = line6;
+
+    float temp = 0;
+    for (int i = 0; i < NUM_OF_SIDES - 1; i++) {
+        int LowestElement = i;
+
+        for (int j = i + 1; j < NUM_OF_SIDES; j++) {
+            {
+                if (RectangleLines[j] > RectangleLines[LowestElement]) {
+                    LowestElement = j;
+                }
+            }
+        }
+
+        if (LowestElement != i) {
+
+            temp = RectangleLines[i];
+            RectangleLines[i] = RectangleLines[LowestElement];
+            RectangleLines[LowestElement] = temp;
+        }
+    }
+    printf("%.2f %.2f %.2f %.2f %.2f %.2f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
+}
+
+
+float calculate_perimeter(float length, float width) {
+    float answer= 2 * (length + width);
+	return answer;
+}
+
+
+float calculate_area(float length, float width) {
+    return length * width;
+}
+
+
+
+
+
+
+
+
+
