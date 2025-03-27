@@ -14,7 +14,9 @@ int main() {
     int choice;
     char sideA[NUMLIMIT], sideB[NUMLIMIT], sideC[NUMLIMIT];
     float sideA_float, sideB_float, sideC_float;
-    double angle_A, angle_B, angle_C;
+    double angle_A ;
+    double angle_B ;
+    double angle_C ;
     while (1) {
         printf("\nMenu:\n1. Triangle Feature\n2. Rectangle Feature\n3. Exit\n");
         printf("Enter your choice: ");
@@ -27,6 +29,7 @@ int main() {
             if (is_it_triangle(sideA_float, sideB_float, sideC_float) == "This is a triangle") {
                 printf("This is a triangle\n");
                 calculate_angles(sideA_float, sideB_float, sideC_float, &angle_A, &angle_B, &angle_C);
+                printf("The angles of the triangles are %.2f and %.2f and %.2f ", angle_A, angle_B, angle_C);
             }
             else {
                 printf("This is not a triangle\n");
