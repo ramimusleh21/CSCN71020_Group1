@@ -85,7 +85,7 @@ double clamp(double value, double min, double max) {
     return value;
 }
 
-void calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C) {
+double calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C) {
 
     double cos_A = (sideB_float * sideB_float + sideC_float * sideC_float - sideA_float * sideA_float) / (2 * sideB_float * sideC_float);
     double cos_B = (sideA_float * sideA_float + sideC_float * sideC_float - sideB_float * sideB_float) / (2 * sideA_float * sideC_float);
@@ -100,7 +100,9 @@ void calculate_angles(float sideA_float, float sideB_float, float sideC_float, d
     *angle_C = acos(cos_C) * 180.0 / PI;
 
 
-    printf("The angles of the triangle are: A = %.2f, B = %.2f, C = %.2f\n", *angle_A, *angle_B, *angle_C);
+    return *angle_A;
+    return *angle_B;
+    return *angle_C;
 }
 
 

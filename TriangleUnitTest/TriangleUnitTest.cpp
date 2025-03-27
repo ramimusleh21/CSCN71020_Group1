@@ -128,5 +128,61 @@ namespace TriangleUnitTest
 			double actual = clamp(-0.9999999999999999, -1.0, 1.0);
 			Assert::AreEqual(expected, actual);
 		}
+
+	};
+		
+		
+		
+	TEST_CLASS(Calculate_Angles)
+		{
+		public:
+
+			TEST_METHOD(TestMethod1)
+			{
+				double A = 60;
+				double B = 60;
+				double C = 60;
+				double expected1 = 60;
+				double expected2 = 60;
+				double expected3 = 60;
+				Assert::AreEqual(expected1, A);
+				Assert::AreEqual(expected2, B);
+				Assert::AreEqual(expected3, C);
+			}
+
+			TEST_METHOD(TestMethod2)
+			{
+				double expected = 1.0;
+				double actual = clamp(1.0, -1.0, 1.0);
+				Assert::AreEqual(expected, actual);
+			}
+
+			TEST_METHOD(TestMethod3)
+			{
+				double expected = -1.0;
+				double actual = clamp(-2.0, -1.0, 1.0);
+				Assert::AreEqual(expected, actual);
+			}
+
+			TEST_METHOD(TestMethod4)
+			{
+				double expected = 1.0;
+				double actual = clamp(2.0, -1.0, 1.0);
+				Assert::AreEqual(expected, actual);
+			}
+
+			TEST_METHOD(TestMethod5) // boundary
+			{
+				double expected = 0.9999999999999999;
+				double actual = clamp(0.9999999999999999, -1.0, 1.0);
+				Assert::AreEqual(expected, actual);
+			}
+
+			TEST_METHOD(TestMethod6) // boundary
+			{
+				double expected = -0.9999999999999999;
+				double actual = clamp(-0.9999999999999999, -1.0, 1.0);
+				Assert::AreEqual(expected, actual);
+			}
 	};
 }

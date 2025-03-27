@@ -12,7 +12,7 @@ char* get_input(const char* prompt);
 bool validate_triangle_input(char* side);
 char* is_it_triangle(float sideA_float, float sideB_float, float sideC_float);
 double clamp(double value, double min, double max);
-void calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C);
+double calculate_angles(float sideA_float, float sideB_float, float sideC_float, double* angle_A, double* angle_B, double* angle_C);
 
 // RECTANGLE FUNCTIONS
 
