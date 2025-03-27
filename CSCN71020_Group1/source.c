@@ -35,12 +35,31 @@ int main() {
         }
         else if (choice == 2) {
             // GetRectangleInput(true); need to debug
-            (void)getchar();
+            char point1[NUMLIMIT];
+            char point2[NUMLIMIT];
+            char point3[NUMLIMIT];
+            char point4[NUMLIMIT];
+            char point5[NUMLIMIT];
+            char point6[NUMLIMIT];
+            char point7[NUMLIMIT];
+            char point8[NUMLIMIT];
+           
 
 
             float rectangle_coords[8];
 
-            get_valid_floats(rectangle_coords, 8);
+            get_rectangle_input(point1, point2, point3, point4, point5, point6, point7, point8);
+
+            float point1_float = (float)atof(point1);
+            float point2_float = (float)atof(point2);
+            float point3_float = (float)atof(point3);
+            float point4_float = (float)atof(point4);
+            float point5_float = (float)atof(point5);
+            float point6_float = (float)atof(point6);
+            float point7_float = (float)atof(point7);
+            float point8_float = (float)atof(point8);
+
+            //get_valid_floats(rectangle_coords, 8);
 
 
             float corner1[COORD_LIMIT] = { rectangle_coords[0], rectangle_coords[1] };

@@ -51,13 +51,14 @@ char* get_input(const char* prompt) {
             fprintf(stderr, "Error reading input. Please try again.\n");
             continue;
         }
-
+        clear_input_buffer();
         if (validate_triangle_input(buffer)) {
             return buffer;
         }
         else {
             fprintf(stderr, "Invalid input. Please enter a valid number.\n");
         }
+        
     }
 }
 
@@ -109,22 +110,36 @@ void clear_input_buffer() {
     while (getchar() != '\n');
 }
 
-void get_valid_floats(float* inputs, int num_inputs) {
-    for (int i = 0; i < num_inputs; i++) {
-        while (1) {
-            printf("Enter point %d: ", i + 1);
-            int result = scanf("%f", &inputs[i]);
+void get_rectangle_input(char* point1, char* point2, char* point3, char* point4) {
 
-            if (result != 1) {
-                clear_input_buffer();
-                printf("Invalid input. Please enter a valid float.\n");
-            }
-            else {
-                break;
-            }
-        }
-    }
+    strcpy(point1, get_input("Enter the Point 1 X: "));
+    strcpy(point2, get_input("Enter the Point 2 Y: "));
+    strcpy(point3, get_input("Enter the Point 3 X: "));
+    strcpy(point4, get_input("Enter the Point 4 Y: "));
+    strcpy(point1, get_input("Enter the Point 5 X: "));
+    strcpy(point2, get_input("Enter the Point 6 Y: "));
+    strcpy(point3, get_input("Enter the Point 7 X: "));
+    strcpy(point4, get_input("Enter the Point 8 Y: "));
+
+
 }
+
+//void get_valid_floats(float* inputs, int num_inputs) {
+//    for (int i = 0; i < num_inputs; i++) {
+//        while (1) {
+//            printf("Enter point %d: ", i + 1);
+//            int result = scanf("%f", &inputs[i]);
+//
+//            if (result != 1) {
+//                clear_input_buffer();
+//                printf("Invalid input. Please enter a valid float.\n");
+//            }
+//            else {
+//                break;
+//            }
+//        }
+//    }
+//}
 
 
 

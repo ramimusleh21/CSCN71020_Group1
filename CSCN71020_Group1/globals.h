@@ -9,5 +9,6 @@
 
 #define NUM_OF_SIDES 6
 
+
 typedef enum {x, y}COORDINATE_VALUES;
 
