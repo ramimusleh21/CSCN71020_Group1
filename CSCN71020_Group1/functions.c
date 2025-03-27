@@ -29,13 +29,13 @@ bool validate_triangle_input(char* side) {
             dot_counter++;
             if (dot_counter > 1) {
                 fprintf(stderr, "Invalid Input: More than one decimal point\n");
-                exit(EXIT_FAILURE);
+                return false;
             }
             continue;
         }
 
         fprintf(stderr, "Invalid Input: Non-numeric character\n");
-        exit(EXIT_FAILURE);
+        return false;
     }
 
 
@@ -73,7 +73,7 @@ char* is_it_triangle(float sideA_float, float sideB_float, float sideC_float) {
         return "This is a triangle";
     }
     else {
-        return "This is a not triangle";
+        return "This is not a triangle";
     }
 }
 
@@ -101,7 +101,6 @@ void calculate_angles(float sideA_float, float sideB_float, float sideC_float, d
 
     printf("The angles of the triangle are: A = %.2f, B = %.2f, C = %.2f\n", *angle_A, *angle_B, *angle_C);
 }
-
 
 
 // RECTANGLE FUNCTIONS
