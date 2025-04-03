@@ -51,7 +51,7 @@ char* get_input(const char* prompt) {
             fprintf(stderr, "Error reading input. Please try again.\n");
             continue;
         }
-        clear_input_buffer();
+        void clear_input_buffer();
         if (validate_triangle_input(buffer)) {
             return buffer;
         }
@@ -112,16 +112,16 @@ void clear_input_buffer() {
     while (getchar() != '\n');
 }
 
-void get_rectangle_input(char* point1, char* point2, char* point3, char* point4) {
+void get_rectangle_input(char* point1, char* point2, char* point3, char* point4, char* point5, char* point6, char* point7, char* point8) {
 
     strcpy(point1, get_input("Enter the Point 1 X: "));
     strcpy(point2, get_input("Enter the Point 2 Y: "));
     strcpy(point3, get_input("Enter the Point 3 X: "));
     strcpy(point4, get_input("Enter the Point 4 Y: "));
-    strcpy(point1, get_input("Enter the Point 5 X: "));
-    strcpy(point2, get_input("Enter the Point 6 Y: "));
-    strcpy(point3, get_input("Enter the Point 7 X: "));
-    strcpy(point4, get_input("Enter the Point 8 Y: "));
+    strcpy(point5, get_input("Enter the Point 5 X: "));
+    strcpy(point6, get_input("Enter the Point 6 Y: "));
+    strcpy(point7, get_input("Enter the Point 7 X: "));
+    strcpy(point8, get_input("Enter the Point 8 Y: "));
 
 
 }
@@ -219,8 +219,9 @@ void calculate_distances(float P1[COORD_LIMIT], float P2[COORD_LIMIT], float P3[
             RectangleLines[i] = RectangleLines[LowestElement];
             RectangleLines[LowestElement] = temp;
         }
+
     }
-    printf("%.2f %.2f %.2f %.2f %.2f %.2f\n\n", RectangleLines[0], RectangleLines[1], RectangleLines[2], RectangleLines[3], RectangleLines[4], RectangleLines[5]);
+   
 }
 
 

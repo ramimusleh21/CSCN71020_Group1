@@ -54,7 +54,7 @@ int main() {
             get_rectangle_input(point1, point2, point3, point4, point5, point6, point7, point8);
 
             float point1_float = (float)atof(point1);
-            float point2_float = (float)atof(point2);
+            float point2_float = (float)atof(point2);   
             float point3_float = (float)atof(point3);
             float point4_float = (float)atof(point4);
             float point5_float = (float)atof(point5);
@@ -65,10 +65,14 @@ int main() {
             //get_valid_floats(rectangle_coords, 8);
 
 
-            float corner1[COORD_LIMIT] = { rectangle_coords[0], rectangle_coords[1] };
-            float corner2[COORD_LIMIT] = { rectangle_coords[2], rectangle_coords[3] };
-            float corner3[COORD_LIMIT] = { rectangle_coords[4], rectangle_coords[5] };
-            float corner4[COORD_LIMIT] = { rectangle_coords[6], rectangle_coords[7] };
+
+            float corner1[COORD_LIMIT] = { point1_float, point2_float };
+            float corner2[COORD_LIMIT] = { point3_float, point4_float };
+            float corner3[COORD_LIMIT] = { point5_float, point6_float };
+            float corner4[COORD_LIMIT] = { point7_float, point8_float };
+
+
+            
 
 
             float RectangleLines[NUM_OF_SIDES];

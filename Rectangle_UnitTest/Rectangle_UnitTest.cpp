@@ -15,7 +15,7 @@ namespace RectangleUnitTest {
 
 	public:
 
-		// Functional Test
+		
 		TEST_METHOD(TestMethod1) {
 
 		float expected = 12.00;
@@ -31,7 +31,7 @@ namespace RectangleUnitTest {
 
 	public:
 
-		// Functional Test
+		
 		TEST_METHOD(TestMethod1) {
 
 		float expected = 9.00;
@@ -52,7 +52,7 @@ namespace RectangleUnitTest {
 			// Functional Test
 			TEST_METHOD(TestMethod1) {
 		
-				float lines[6] = {5,5,3,4,3,4};
+				float lines[6] = {5,5,4,4,3,3};
 				int expected = 0;
 				int actual = IsitRectangle(lines);
 				Assert::AreEqual(expected, actual);
