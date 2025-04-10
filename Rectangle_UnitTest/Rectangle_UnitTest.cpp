@@ -11,6 +11,52 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace RectangleUnitTest {
 
+	TEST_CLASS(TestInputValidation) {
+public:
+
+	TEST_METHOD(TestValidIntegerInput) {
+		bool expected = true;
+		bool actual = validate_triangle_input("123");
+		Assert::AreEqual(expected, actual);
+	}
+
+	TEST_METHOD(TestValidFloatInput) {
+		bool expected = true;
+		bool actual = validate_triangle_input("123.45");
+		Assert::AreEqual(expected, actual);
+	}
+
+	TEST_METHOD(TestMultipleDots) {
+		bool expected = false;
+		bool actual = validate_triangle_input("123.45.67");
+		Assert::AreEqual(expected, actual);
+	}
+
+	TEST_METHOD(TestNonNumericCharacter) {
+		bool expected = false;
+		bool actual = validate_triangle_input("123a45");
+		Assert::AreEqual(expected, actual);
+	}
+
+	TEST_METHOD(TestSpecialCharacter) {
+		bool expected = false;
+		bool actual = validate_triangle_input("123@45");
+		Assert::AreEqual(expected, actual);
+	}
+	TEST_METHOD(TestNegativeNumber) {
+		bool expected = false;
+		bool actual = validate_triangle_input("-123");
+		Assert::AreEqual(expected, actual);
+	}
+
+
+	TEST_METHOD(TestWhitespace) {
+		bool expected = false;
+		bool actual = validate_triangle_input(" 123 ");
+		Assert::AreEqual(expected, actual);
+	}
+	};
+
 	TEST_CLASS(TestPerimeter) {
 
 	public:
@@ -42,10 +88,7 @@ namespace RectangleUnitTest {
 
 	};
 
-
-
-
-		TEST_CLASS(TestIsItRectangle) {
+	TEST_CLASS(TestIsItRectangle) {
 	
 		public:
 

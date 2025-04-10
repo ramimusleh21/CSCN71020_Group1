@@ -126,22 +126,6 @@ void get_rectangle_input(char* point1, char* point2, char* point3, char* point4,
 
 }
 
-//void get_valid_floats(float* inputs, int num_inputs) {
-//    for (int i = 0; i < num_inputs; i++) {
-//        while (1) {
-//            printf("Enter point %d: ", i + 1);
-//            int result = scanf("%f", &inputs[i]);
-//
-//            if (result != 1) {
-//                clear_input_buffer();
-//                printf("Invalid input. Please enter a valid float.\n");
-//            }
-//            else {
-//                break;
-//            }
-//        }
-//    }
-//}
 
 
 

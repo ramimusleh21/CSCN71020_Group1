@@ -48,39 +48,57 @@ namespace TriangleUnitTest
 		}
 	};
 
-
 	TEST_CLASS(TestIsItTriangle)
 	{
 	public:
 
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(TestEquilateralTriangle)
 		{
 			char* expected = "This is a triangle";
 			char* actual = is_it_triangle(10, 10, 10);
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(TestMethod2)
+		TEST_METHOD(TestIsoscelesTriangle)
+		{
+			char* expected = "This is a triangle";
+			char* actual = is_it_triangle(10, 10, 5);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestScaleneTriangle)
+		{
+			char* expected = "This is a triangle";
+			char* actual = is_it_triangle(7, 10, 5);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestNotATriangle)
 		{
 			char* expected = "This is not a triangle";
 			char* actual = is_it_triangle(1, 2, 3);
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(TestMethod3)
+		TEST_METHOD(TestZeroSides)
 		{
 			char* expected = "This is not a triangle";
 			char* actual = is_it_triangle(0, 0, 0);
+			Assert::AreEqual(expected, actual);
+		}
+		TEST_METHOD(TestNegativeSides)
+		{
+			char* expected = "This is not a triangle";
+			char* actual = is_it_triangle(-1, -1, -1);
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(TestMethod4)
+		TEST_METHOD(TestOneSideZero)
 		{
 			char* expected = "This is not a triangle";
-			char* actual = is_it_triangle(0, 0, 0);
+			char* actual = is_it_triangle(0, 10, 10);
 			Assert::AreEqual(expected, actual);
-		}
-		
+		}		
 	};
 
 	TEST_CLASS(ClampFunction)
@@ -115,14 +133,14 @@ namespace TriangleUnitTest
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(TestMethod5) // boundary
+		TEST_METHOD(TestMethod5) 
 		{
 			double expected = 0.9999999999999999;
 			double actual = clamp(0.9999999999999999, -1.0, 1.0);
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(TestMethod6) // boundary
+		TEST_METHOD(TestMethod6) 
 		{
 			double expected = -0.9999999999999999;
 			double actual = clamp(-0.9999999999999999, -1.0, 1.0);
@@ -130,59 +148,32 @@ namespace TriangleUnitTest
 		}
 
 	};
-		
-		
-		
+			
 	TEST_CLASS(Calculate_Angles)
 		{
 		public:
-
-			TEST_METHOD(TestMethod1)
+			TEST_METHOD(TestEquilateralTriangle)
 			{
-				double A = 60;
-				double B = 60;
-				double C = 60;
-				double expected1 = 60;
-				double expected2 = 60;
-				double expected3 = 60;
-				Assert::AreEqual(expected1, A);
-				Assert::AreEqual(expected2, B);
-				Assert::AreEqual(expected3, C);
+				double angle_A, angle_B, angle_C;
+				calculate_angles(10.0, 10.0, 10.0, &angle_A, &angle_B, &angle_C);
+				double expected_A = 60.0;
+				double expected_B = 60.0;
+				double expected_C = 60.0;
+				Assert::AreEqual(expected_A, angle_A, 0.0001);
+				Assert::AreEqual(expected_B, angle_B, 0.0001);
+				Assert::AreEqual(expected_C, angle_C, 0.0001);
 			}
 
-			TEST_METHOD(TestMethod2)
+			TEST_METHOD(TestRightTriangle)
 			{
-				double expected = 1.0;
-				double actual = clamp(1.0, -1.0, 1.0);
-				Assert::AreEqual(expected, actual);
-			}
-
-			TEST_METHOD(TestMethod3)
-			{
-				double expected = -1.0;
-				double actual = clamp(-2.0, -1.0, 1.0);
-				Assert::AreEqual(expected, actual);
-			}
-
-			TEST_METHOD(TestMethod4)
-			{
-				double expected = 1.0;
-				double actual = clamp(2.0, -1.0, 1.0);
-				Assert::AreEqual(expected, actual);
-			}
-
-			TEST_METHOD(TestMethod5) // boundary
-			{
-				double expected = 0.9999999999999999;
-				double actual = clamp(0.9999999999999999, -1.0, 1.0);
-				Assert::AreEqual(expected, actual);
-			}
-
-			TEST_METHOD(TestMethod6) // boundary
-			{
-				double expected = -0.9999999999999999;
-				double actual = clamp(-0.9999999999999999, -1.0, 1.0);
-				Assert::AreEqual(expected, actual);
+				double angle_A, angle_B, angle_C;
+				calculate_angles(3.0, 4.0, 5.0, &angle_A, &angle_B, &angle_C);
+				double expected_A = 36.86989764584402;
+				double expected_B = 53.13010235415599;
+				double expected_C = 90.0;
+				Assert::AreEqual(expected_A, angle_A, 0.01);
+				Assert::AreEqual(expected_B, angle_B, 0.01);
+				Assert::AreEqual(expected_C, angle_C, 0.01);
 			}
 	};
 }

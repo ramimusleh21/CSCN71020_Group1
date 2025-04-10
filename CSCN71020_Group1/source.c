@@ -21,7 +21,8 @@ int main() {
         printf("\nMenu:\n1. Triangle Feature\n2. Rectangle Feature\n3. Exit\n");
         printf("Enter your choice: ");
         scanf_s("%d", &choice);
-        if (choice == 1) {
+        (void)getchar();
+        if (choice == 1 ){
             get_triangle_input(sideA, sideB, sideC);
             sideA_float = (float)atof(sideA);
             sideB_float = (float)atof(sideB);
@@ -36,8 +37,8 @@ int main() {
                 return 1;
             }
         }
-        else if (choice == 2) {
-            // GetRectangleInput(true); need to debug
+        else if (choice == 2 ){
+
             char point1[NUMLIMIT];
             char point2[NUMLIMIT];
             char point3[NUMLIMIT];
@@ -62,7 +63,7 @@ int main() {
             float point7_float = (float)atof(point7);
             float point8_float = (float)atof(point8);
 
-            //get_valid_floats(rectangle_coords, 8);
+            
 
 
 
